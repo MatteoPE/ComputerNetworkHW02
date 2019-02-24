@@ -4,7 +4,7 @@ import protocol
 
 #HOST = 'localhost'
 PORT = int(sys.argv[1])
-BUFFER_SIZE = 1024
+BUFFER_SIZE = 32768
 
 print("Creating a socket...")
 # create an INET, STREAMing socket
