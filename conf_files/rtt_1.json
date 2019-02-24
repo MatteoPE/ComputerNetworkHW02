@@ -1,0 +1,6 @@
+{
+  "m_type" : "rtt",
+  "msg_size" : 1,
+  "probes" : 10,
+  "server_delay" : 0
+}
