@@ -7,10 +7,16 @@ import json
 
 #155.98.37.66
 
+if len(sys.argv) != 3 and len(sys.argv) != 4:
+    print("Wrong number of arguments")
+    sys.exit(1)
+
 HOST = sys.argv[1]
 PORT = int(sys.argv[2])
-VAR_PATH = ".conf_files/rtt_1.json"
-BUFFER_SIZE = 1024
+VAR_PATH = "./conf_files/rtt_1.json"
+if len(sys.argv) == 4:
+    VAR_PATH = sys.argv[3]
+BUFFER_SIZE = 32768
 
 
 def setup_connection(state):
@@ -33,7 +39,7 @@ def setup_connection(state):
 
 
 def performance_measurement(state):
-    file = open(state.filename(), "w")
+    file = open("./output/" + state.filename(), "w")
     payload = state.msg_size*'A'
     for seq_num in range(state.probes):
         pkt = protocol.MP(payload, seq_num)
@@ -42,8 +48,12 @@ def performance_measurement(state):
         s.sendall(to_send)
         data = s.recv(BUFFER_SIZE)
         end = time.time()
-        interval = end - start
-        file.write(str(interval) + "\n")
+        RTT = end - start
+        if state.msg_size == "rtt":
+            file.write(str(RTT) + "\n")
+        else:
+            TPUT = state.msg_size / (RTT / 2)
+            file.write(str(TPUT) + "\n")
         print(data)
     file.close()
 
