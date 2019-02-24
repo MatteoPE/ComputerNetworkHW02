@@ -9,7 +9,7 @@ import json
 
 HOST = sys.argv[1]
 PORT = int(sys.argv[2])
-VAR_PATH = "./rtt_1.json"
+VAR_PATH = ".conf_files/rtt_1.json"
 BUFFER_SIZE = 1024
 
 
